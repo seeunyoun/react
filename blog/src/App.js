@@ -6,6 +6,8 @@ const App = () => {
   let [like, setLike] = useState(0);
   let [flag, setFlag] = useState(false);
   let [num, setNum] = useState(0);
+  let [입력값, 입력값변경] = useState("");
+  let arr2 = [...title];
 
   function changeTitle() {
     let arr = [...title];
@@ -51,7 +53,7 @@ const App = () => {
 
       {title.map(function (a, i) {
         return (
-          <div className="list">
+          <div className="list" key={i}>
             <h2
               onClick={() => {
                 setNum(i);
@@ -72,6 +74,29 @@ const App = () => {
           </div>
         );
       })}
+
+      <div className="publish">
+        <input
+          onChange={(e) => {
+            입력값변경(e.target.value);
+          }}
+        />
+        <button
+          onClick={() => {
+            arr2.unshift(입력값);
+            setTitle(arr2);
+          }}
+        >
+          저장
+        </button>
+      </div>
+
+      {/* {입력값}
+      <input
+        onChange={(e) => {
+          입력값변경(e.target.value);
+        }}
+      /> */}
 
       <button
         onClick={() => {
