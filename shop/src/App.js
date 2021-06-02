@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { Button, Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 import "./App.css";
 import Data from "./data.js";
+import { Link, Route, Switch } from "react-router-dom";
+import Detail from "./Detail";
 
 function App() {
   let [shoes, setShoes] = useState(Data);
-  let [num, setNum] = useState(0);
 
   return (
     <div className="App">
@@ -34,18 +35,23 @@ function App() {
           </Navbar.Collapse>
         </Container>
       </Navbar>{" "}
-      <div className="jumbotron">
-        <h1>20% season OFF</h1>
-        <p>jumbotron</p>
-        <Button variant="primary">jumbotron</Button>{" "}
-      </div>
-      <div className="container">
-        <div className="row">
-          {shoes.map((shoe, i) => {
-            return <Product shoes={shoe} i={i} key={i} />;
-          })}
+      <Route exact path="/">
+        <div className="jumbotron">
+          <h1>20% season OFF</h1>
+          <p>jumbotron</p>
+          <Button variant="primary">jumbotron</Button>{" "}
         </div>
-      </div>
+        <div className="container">
+          <div className="row">
+            {shoes.map((shoe, i) => {
+              return <Product shoes={shoe} i={i} key={i} />;
+            })}
+          </div>
+        </div>
+      </Route>
+      <Route path="/detail">
+        <Detail />
+      </Route>
     </div>
   );
 }
