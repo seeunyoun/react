@@ -5,6 +5,7 @@ import Data from "./data.js";
 
 function App() {
   let [shoes, setShoes] = useState(Data);
+  let [num, setNum] = useState(0);
 
   return (
     <div className="App">
@@ -40,7 +41,7 @@ function App() {
       </div>
       <div className="container">
         <div className="row">
-          {shoes.map((shoe, i) => {
+          {/* {shoes.map((shoe, i) => {
             return (
               <div className="col-md-4" key={i}>
                 <img src={shoe.img} width="100%" />
@@ -50,21 +51,24 @@ function App() {
                 </p>
               </div>
             );
-          })}
+          })} */}
+          <Product shoes={shoes} num={num} />
+          <Product shoes={shoes} num={num} />
+          <Product shoes={shoes} num={num} />
         </div>
       </div>
     </div>
   );
 }
 
-// function Product(props) {
-//   <div className="col-md-4">
-//     <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%" />
-//     <h4>{props.shoes[props.num].title}</h4>
-//     <p>
-//       {props.shoes[0].content} & {props.shoes[0].price}
-//     </p>
-//   </div>;
-// }
+function Product(props) {
+  return (
+    <div className="col-md-4">
+      <img src={props.shoes[props.num].img} width="100%" />
+      <h4>{props.shoes[props.num].title}</h4>
+      <p>{props.shoes[props.num].content} & {props.shoes[props.num].price}</p>
+    </div>
+  );
+}
 
 export default App;
