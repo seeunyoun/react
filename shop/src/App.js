@@ -41,20 +41,9 @@ function App() {
       </div>
       <div className="container">
         <div className="row">
-          {/* {shoes.map((shoe, i) => {
-            return (
-              <div className="col-md-4" key={i}>
-                <img src={shoe.img} width="100%" />
-                <h4>{shoe.title}</h4>
-                <p>
-                  {shoe.content} & {shoe.price}
-                </p>
-              </div>
-            );
-          })} */}
-          <Product shoes={shoes} num={num} />
-          <Product shoes={shoes} num={num} />
-          <Product shoes={shoes} num={num} />
+          {shoes.map((shoe, i) => {
+            return <Product shoes={shoe} i={i} key={i} />;
+          })}
         </div>
       </div>
     </div>
@@ -64,9 +53,16 @@ function App() {
 function Product(props) {
   return (
     <div className="col-md-4">
-      <img src={props.shoes[props.num].img} width="100%" />
-      <h4>{props.shoes[props.num].title}</h4>
-      <p>{props.shoes[props.num].content} & {props.shoes[props.num].price}</p>
+      <img
+        src={
+          "https://codingapple1.github.io/shop/shoes" + (props.i + 1) + ".jpg"
+        }
+        width="100%"
+      />
+      <h4>{props.shoes.title}</h4>
+      <p>
+        {props.shoes.content} & {props.shoes.price}
+      </p>
     </div>
   );
 }
