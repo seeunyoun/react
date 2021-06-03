@@ -7,6 +7,7 @@ import Detail from "./Detail.js";
 
 function App() {
   let [shoes, setShoes] = useState(Data);
+  let [prices, setPrices] = useState();
 
   return (
     <div className="App">
@@ -46,6 +47,7 @@ function App() {
             <p>jumbotron</p>
             <Button variant="primary">jumbotron</Button>{" "}
           </div>
+          <button className="btn btn-info">가격순 정렬</button>
           <div className="container">
             <div className="row">
               {shoes.map((shoe, i) => {
@@ -54,9 +56,14 @@ function App() {
             </div>
           </div>
         </Route>
-        <Route path="/detail">
-          <Detail />
+        {/* <Route path="/detail">
+          <Detail shoes={shoes}/>
         </Route>
+ */}
+        <Route path="/detail/:id">
+          <Detail shoes={shoes} />
+        </Route>
+
         <Route path="/:id">
           <div>아무거나 쳤을 때 이거 나옴</div>
         </Route>
