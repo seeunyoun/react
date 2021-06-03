@@ -3,7 +3,7 @@ import { Button, Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 import "./App.css";
 import Data from "./data.js";
 import { Link, Route, Switch } from "react-router-dom";
-import Detail from "./Detail";
+import Detail from "./Detail.js";
 
 function App() {
   let [shoes, setShoes] = useState(Data);
@@ -16,8 +16,12 @@ function App() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto">
-              <Nav.Link href="#home">Home</Nav.Link>
-              <Nav.Link href="#link">Link</Nav.Link>
+              <Nav.Link>
+                <Link to="/">Home</Link>
+              </Nav.Link>
+              <Nav.Link>
+                <Link to="/detail">Detail</Link>
+              </Nav.Link>
               <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">
@@ -35,23 +39,28 @@ function App() {
           </Navbar.Collapse>
         </Container>
       </Navbar>{" "}
-      <Route exact path="/">
-        <div className="jumbotron">
-          <h1>20% season OFF</h1>
-          <p>jumbotron</p>
-          <Button variant="primary">jumbotron</Button>{" "}
-        </div>
-        <div className="container">
-          <div className="row">
-            {shoes.map((shoe, i) => {
-              return <Product shoes={shoe} i={i} key={i} />;
-            })}
+      <Switch>
+        <Route exact path="/">
+          <div className="jumbotron">
+            <h1>20% season OFF</h1>
+            <p>jumbotron</p>
+            <Button variant="primary">jumbotron</Button>{" "}
           </div>
-        </div>
-      </Route>
-      <Route path="/detail">
-        <Detail />
-      </Route>
+          <div className="container">
+            <div className="row">
+              {shoes.map((shoe, i) => {
+                return <Product shoes={shoe} i={i} key={i} />;
+              })}
+            </div>
+          </div>
+        </Route>
+        <Route path="/detail">
+          <Detail />
+        </Route>
+        <Route path="/:id">
+          <div>아무거나 쳤을 때 이거 나옴</div>
+        </Route>
+      </Switch>
     </div>
   );
 }
