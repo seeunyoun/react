@@ -1,8 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import "./Detail.scss";
 
 const Detail = (props) => {
+  let [alert, setAlert] = useState(true);
+  let [inputData, setInputData] = useState("");
+
+  useEffect(() => {
+    // 컴포넌트가 mount 되었을 때, 컴포넌트가 update 될 때 특정 코드를 실행할 수 있음
+    let timer = setTimeout(() => {
+      setAlert(false);
+    }, 2000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [alert]);
+
   let { id } = useParams(); // {} 중괄호가 생성됨!
   let history = useHistory();
   let 찾은상품 = props.shoes.find(function (상품) {
@@ -11,9 +24,17 @@ const Detail = (props) => {
 
   return (
     <div className="container">
-      <div className="my-alert">
-        <p>재고가 얼마 남지 않았습니다.</p>
-      </div>
+      {inputData}
+      <input
+        onChange={(e) => {
+          setInputData(e.target.value);
+        }}
+      />
+      {alert === true ? (
+        <div className="my-alert">
+          <p>재고가 얼마 남지 않았습니다.</p>
+        </div>
+      ) : null}
       <div className="row">
         <div className="col-md-6">
           <img
