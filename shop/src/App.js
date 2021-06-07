@@ -4,6 +4,7 @@ import "./App.css";
 import Data from "./data.js";
 import { Link, Route, Switch } from "react-router-dom";
 import Detail from "./Detail.js";
+import axios from "axios";
 
 function App() {
   let [shoes, setShoes] = useState(Data);
@@ -47,13 +48,33 @@ function App() {
             <p>jumbotron</p>
             <Button variant="primary">jumbotron</Button>{" "}
           </div>
-          <button className="btn btn-info">가격순 정렬</button>
           <div className="container">
             <div className="row">
               {shoes.map((shoe, i) => {
                 return <Product shoes={shoe} i={i} key={i} />;
               })}
             </div>
+            <button
+              className="btn btn-info"
+              onClick={() => {
+                axios
+                  .get("https://codingapple1.github.io/shop/data2.json")
+                  .then((result) => {
+                    let arr = [...shoes];
+                    let shoes2 = [...result.data];
+                    shoes2.map((a, b) => {
+                      arr.push(a);
+                    });
+                    setShoes(arr);
+                    // setShoes([...shoes, ...result.data]);
+                  })
+                  .catch(() => {
+                    console.log("실패");
+                  });
+              }}
+            >
+              더보기
+            </button>
           </div>
         </Route>
         {/* <Route path="/detail">
@@ -87,6 +108,27 @@ function Product(props) {
       </p>
     </div>
   );
+}
+
+function Product2(props) {
+  return (
+    <div className="col-md-4">
+      <img
+        src={
+          "https://codingapple1.github.io/shop/shoes" + (props.i + 1) + ".jpg"
+        }
+        width="100%"
+      />
+      <h4>{props.shoes2.title}</h4>
+      <p>
+        {props.shoes2.content} & {props.shoes2.price}
+      </p>
+    </div>
+  );
+}
+
+function Joke(props) {
+  return <h1>아아아아아아아아아 {props.result.data[0].title}</h1>;
 }
 
 export default App;
