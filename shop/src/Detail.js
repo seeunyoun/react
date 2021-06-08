@@ -50,7 +50,21 @@ const Detail = (props) => {
           <h4 className="red pt-5">{찾은상품.title}</h4>
           <p>{찾은상품.content}</p>
           <p>{찾은상품.price}원</p>
-          <button className="btn btn-danger">주문하기</button>
+
+          <Info stocks={props.stocks} />
+
+          <button
+            className="btn btn-danger"
+            onClick={() => {
+              let amount = [...props.stocks];
+              amount.map((a, b) => {
+                return a - 1;
+              });
+              props.setStock(amount);
+            }}
+          >
+            주문하기
+          </button>
           <button
             className="btn btn-secondary"
             onClick={() => {
@@ -64,5 +78,9 @@ const Detail = (props) => {
     </div>
   );
 };
+
+function Info(props) {
+  return <p>재고 : {props.stocks[0]}</p>;
+}
 
 export default Detail;
