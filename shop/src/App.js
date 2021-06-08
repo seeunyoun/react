@@ -6,9 +6,11 @@ import { Link, Route, Switch } from "react-router-dom";
 import Detail from "./Detail.js";
 import axios from "axios";
 
+let stocksContext = React.createContext();
+
 function App() {
   let [shoes, setShoes] = useState(Data);
-  let [prices, setPrices] = useState();
+  let [stocks, setStocks] = useState([10, 11, 12]);
 
   return (
     <div className="App">
@@ -60,13 +62,7 @@ function App() {
                 axios
                   .get("https://codingapple1.github.io/shop/data2.json")
                   .then((result) => {
-                    let arr = [...shoes];
-                    let shoes2 = [...result.data];
-                    shoes2.map((a, b) => {
-                      arr.push(a);
-                    });
-                    setShoes(arr);
-                    // setShoes([...shoes, ...result.data]);
+                    setShoes([...shoes, ...result.data]);
                   })
                   .catch(() => {
                     console.log("실패");
@@ -82,7 +78,7 @@ function App() {
         </Route>
  */}
         <Route path="/detail/:id">
-          <Detail shoes={shoes} />
+          <Detail shoes={shoes} stocks={stocks} setStocks={setStocks} />
         </Route>
 
         <Route path="/:id">
@@ -108,27 +104,6 @@ function Product(props) {
       </p>
     </div>
   );
-}
-
-function Product2(props) {
-  return (
-    <div className="col-md-4">
-      <img
-        src={
-          "https://codingapple1.github.io/shop/shoes" + (props.i + 1) + ".jpg"
-        }
-        width="100%"
-      />
-      <h4>{props.shoes2.title}</h4>
-      <p>
-        {props.shoes2.content} & {props.shoes2.price}
-      </p>
-    </div>
-  );
-}
-
-function Joke(props) {
-  return <h1>아아아아아아아아아 {props.result.data[0].title}</h1>;
 }
 
 export default App;
