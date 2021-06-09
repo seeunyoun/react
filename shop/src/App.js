@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Button, Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 import "./App.css";
 import Data from "./data.js";
@@ -6,7 +6,7 @@ import { Link, Route, Switch } from "react-router-dom";
 import Detail from "./Detail.js";
 import axios from "axios";
 
-let stocksContext = React.createContext();
+export let stocksContext = React.createContext(); // 다른 JS 파일에서 쓰고 싶으면 export하면 됨!
 
 function App() {
   let [shoes, setShoes] = useState(Data);
@@ -51,11 +51,13 @@ function App() {
             <Button variant="primary">jumbotron</Button>{" "}
           </div>
           <div className="container">
-            <div className="row">
-              {shoes.map((shoe, i) => {
-                return <Product shoes={shoe} i={i} key={i} />;
-              })}
-            </div>
+            <stocksContext.Provider value={stocks}>
+              <div className="row">
+                {shoes.map((shoe, i) => {
+                  return <Product shoes={shoe} i={i} key={i} />;
+                })}
+              </div>
+            </stocksContext.Provider>
             <button
               className="btn btn-info"
               onClick={() => {
@@ -78,7 +80,9 @@ function App() {
         </Route>
  */}
         <Route path="/detail/:id">
-          <Detail shoes={shoes} stocks={stocks} setStocks={setStocks} />
+          <stocksContext.Provider value={stocks}>
+            <Detail shoes={shoes} stocks={stocks} setStocks={setStocks} />
+          </stocksContext.Provider>
         </Route>
 
         <Route path="/:id">
@@ -90,6 +94,7 @@ function App() {
 }
 
 function Product(props) {
+  let stocks = useContext(stocksContext);
   return (
     <div className="col-md-4">
       <img
@@ -102,6 +107,7 @@ function Product(props) {
       <p>
         {props.shoes.content} & {props.shoes.price}
       </p>
+      {stocks[props.i]}
     </div>
   );
 }
