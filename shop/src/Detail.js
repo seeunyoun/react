@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import "./Detail.scss";
+import { stocksContext } from "./App";
 
 const Detail = (props) => {
   let [alert, setAlert] = useState(true);
   let [inputData, setInputData] = useState("");
+  let stocks = useContext(stocksContext);
 
   useEffect(() => {
     // 컴포넌트가 mount 되었을 때, 컴포넌트가 update 될 때 특정 코드를 실행할 수 있음
