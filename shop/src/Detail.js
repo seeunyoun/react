@@ -2,13 +2,15 @@ import React, { useState, useEffect, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import "./Detail.scss";
 import { stocksContext } from "./App";
-import { Button, Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
+import { Nav } from "react-bootstrap";
+import { CSSTransition } from "react-transition-group";
 
 const Detail = (props) => {
   let [alert, setAlert] = useState(true);
   let [inputData, setInputData] = useState("");
   let stocks = useContext(stocksContext);
   let [tab, setTab] = useState(0); // 현재 누른 버튼의 번호를 저장할 공간!
+  let [convert, setConvert] = useState(false);
 
   useEffect(() => {
     // 컴포넌트가 mount 되었을 때, 컴포넌트가 update 될 때 특정 코드를 실행할 수 있음
@@ -84,6 +86,7 @@ const Detail = (props) => {
           <Nav.Link
             eventKey="link-0"
             onClick={() => {
+              setConvert(false);
               setTab(0);
             }}
           >
@@ -94,6 +97,7 @@ const Detail = (props) => {
           <Nav.Link
             eventKey="link-1"
             onClick={() => {
+              setConvert(false);
               setTab(1);
             }}
           >
@@ -101,12 +105,18 @@ const Detail = (props) => {
           </Nav.Link>
         </Nav.Item>
       </Nav>{" "}
-      <TabContent tab={tab} />
+      <CSSTransition in={true} classNames="wow" timeout={500}>
+        <TabContent tab={tab} setConvert={setConvert} />
+      </CSSTransition>
     </div>
   );
 };
 
 function TabContent(props) {
+  useEffect(() => {
+    props.setConvert(true);
+  });
+
   if (props.tab === 0) {
     return <div>0번째 내용입니다</div>;
   } else if (props.tab === 1) {

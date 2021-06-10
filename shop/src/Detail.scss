@@ -1,5 +1,14 @@
 $main-color: #f00;
 
+.wow-enter {
+  background-color: #000;
+}
+
+.wow-enter-active {
+  background-color: $main-color;
+  transition: all 500ms;
+}
+
 .red {
   color: $main-color;
 }
