@@ -2,11 +2,13 @@ import React, { useState, useEffect, useContext } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import "./Detail.scss";
 import { stocksContext } from "./App";
+import { Button, Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 
 const Detail = (props) => {
   let [alert, setAlert] = useState(true);
   let [inputData, setInputData] = useState("");
   let stocks = useContext(stocksContext);
+  let [tab, setTab] = useState(0); // 현재 누른 버튼의 번호를 저장할 공간!
 
   useEffect(() => {
     // 컴포넌트가 mount 되었을 때, 컴포넌트가 update 될 때 특정 코드를 실행할 수 있음
@@ -77,9 +79,42 @@ const Detail = (props) => {
           </button>
         </div>
       </div>
+      <Nav className="mt-5" variant="tabs" defaultActiveKey="link-0">
+        <Nav.Item>
+          <Nav.Link
+            eventKey="link-0"
+            onClick={() => {
+              setTab(0);
+            }}
+          >
+            Active
+          </Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link
+            eventKey="link-1"
+            onClick={() => {
+              setTab(1);
+            }}
+          >
+            Option 2
+          </Nav.Link>
+        </Nav.Item>
+      </Nav>{" "}
+      <TabContent tab={tab} />
     </div>
   );
 };
+
+function TabContent(props) {
+  if (props.tab === 0) {
+    return <div>0번째 내용입니다</div>;
+  } else if (props.tab === 1) {
+    return <div>1번째 내용입니다</div>;
+  } else if (props.tab === 2) {
+    return <div>2번째 내용입니다</div>;
+  }
+}
 
 function Info(props) {
   return <p>재고 : {props.stocks[0]}</p>;
