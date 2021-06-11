@@ -5,6 +5,7 @@ import Data from "./data.js";
 import { Link, Route, Switch } from "react-router-dom";
 import Detail from "./Detail.js";
 import axios from "axios";
+import Cart from "./Cart.js";
 
 export let stocksContext = React.createContext(); // 다른 JS 파일에서 쓰고 싶으면 export하면 됨!
 
@@ -83,6 +84,10 @@ function App() {
           <stocksContext.Provider value={stocks}>
             <Detail shoes={shoes} stocks={stocks} setStocks={setStocks} />
           </stocksContext.Provider>
+        </Route>
+
+        <Route path="/cart">
+          <Cart></Cart>
         </Route>
 
         <Route path="/:id">
